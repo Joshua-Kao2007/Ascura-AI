@@ -1,27 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="d-flex" style="min-height:60vh;align-items:center;justify-content:center;">
-  <div class="card p-4" style="width:100%">
-  <h3 class="mb-3 text-center">Register</h3>
-  <form method="POST">
-    <div class="mb-3">
-      <label class="form-label">Username</label>
-      <input type="text" name="username" class="form-control" required>
-    </div>
+  <div class="card p-4" style="width:100%;max-width:500px;">
+    <h3 class="mb-3 text-center">Register</h3>
 
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" name="email" class="form-control" required>
-    </div>
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required>
+      </div>
 
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input type="password" name="password" class="form-control" required>
-    </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
 
-    <button type="submit" class="btn btn-primary w-100">Register</button>
-  </form>
-  <p class="mt-3 text-center">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">City</label>
+        <select id="citySelect" name="city" class="form-select" required>
+          <option value="" disabled selected>Select your city</option>
+          <option value="Chicago">Chicago</option>
+          <option value="New York">New York</option>
+          <option value="San Francisco">San Francisco</option>
+          <option value="Los Angeles">Los Angeles</option>
+          <option value="Seattle">Seattle</option>
+          <option value="Boston">Boston</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" id="otherCity" name="other_city" class="form-control mt-2" placeholder="Enter your city" style="display:none;">
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+
+    <p class="mt-3 text-center">
+      Already have an account? <a href="{{ url_for('login') }}">Login</a>
+    </p>
   </div>
 </div>
+
+<script>
+  const citySelect = document.getElementById('citySelect');
+  const otherCity = document.getElementById('otherCity');
+  citySelect.addEventListener('change', () => {
+    if (citySelect.value === 'Other') {
+      otherCity.style.display = 'block';
+      otherCity.required = true;
+    } else {
+      otherCity.style.display = 'none';
+      otherCity.required = false;
+      otherCity.value = '';
+    }
+  });
+</script>
 {% endblock %}
